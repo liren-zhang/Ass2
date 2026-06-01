@@ -19,8 +19,10 @@ from .permissions import IsAdminUser
 
 # 商品视图集（增加搜索功能）
 class ProductViewSet(viewsets.ModelViewSet):
-    # ...
-    @action(detail=False, methods=['get'])
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
+
+    @action(detail=False, methods=['get'], permission_classes=[AllowAny])
     def search(self, request):
         keyword = request.query_params.get('q', '')
         if keyword:
