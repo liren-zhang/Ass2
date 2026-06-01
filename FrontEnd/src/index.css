@@ -1,26 +1,292 @@
-/* src/index.css */
-body {
+/* src/index.css - 全局样式（优化版） */
+
+/* Reset & base */
+* {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
-  background-color: #f5f5f5;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-button {
+body {
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+  background: #f3f6fc;
+  color: #1e2a3a;
+  line-height: 1.5;
+  padding: 0;
+}
+
+/* 容器 */
+.container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 1rem 2rem;
+}
+
+/* 导航栏 - 登录注册在右上 */
+nav {
+  background: white;
+  border-bottom: 1px solid #e2e8f0;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+  padding: 0.75rem 2rem;
+  flex-wrap: wrap;
+}
+
+nav a {
+  text-decoration: none;
+  color: #2c3e50;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+nav a:hover {
+  color: #3b82f6;
+}
+
+nav button {
+  background: none;
+  border: none;
+  color: #2c3e50;
+  font-weight: 500;
   cursor: pointer;
-  background-color: #007bff;
+  padding: 0.25rem 0.5rem;
+  font-size: 1rem;
+}
+
+nav button:hover {
+  color: #ef4444;
+}
+
+/* 用户名显示在左侧，登录/注册按钮组推到右侧 */
+nav .nav-links {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  margin-left: auto;  /* 关键：将链接组推到右边 */
+}
+
+/* 覆盖之前的 span 样式，不再使用 margin-left: auto */
+nav span {
+  color: #4b5563;
+  font-size: 0.9rem;
+}
+
+/* 卡片通用样式 */
+.card {
+  background: white;
+  border-radius: 1rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s, box-shadow 0.2s;
+  padding: 1rem;
+  border: 1px solid #eef2f6;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+}
+
+/* 商品网格 */
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.product-card {
+  background: white;
+  border-radius: 1.2rem;   /* 加大圆角 */
+  padding: 1.2rem;
+  border: 1px solid #e2e8f0;
+  transition: all 0.2s;
+  overflow: hidden;
+}
+
+.product-card h3 {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+  color: #1e293b;
+}
+
+.product-card p {
+  color: #475569;
+  margin: 0.5rem 0;
+}
+
+.product-card .price {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #3b82f6;
+  margin: 0.5rem 0;
+}
+
+/* 搜索区域：输入框和按钮在同一行 */
+.search-area {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+  align-items: center;
+}
+
+.search-area input {
+  flex: 1;
+  max-width: 300px;
+}
+
+.search-area button {
+  white-space: nowrap;
+}
+
+/* 按钮 */
+button, .btn {
+  background: #3b82f6;
   color: white;
   border: none;
-  padding: 5px 10px;
-  border-radius: 4px;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
 }
 
-button:hover {
-  background-color: #0056b3;
+button:hover, .btn:hover {
+  background: #2563eb;
 }
 
-input {
-  padding: 5px;
-  margin: 5px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+button:active {
+  transform: scale(0.97);
+}
+
+button.danger {
+  background: #ef4444;
+}
+button.danger:hover {
+  background: #dc2626;
+}
+
+/* 表单 */
+input, select, textarea {
+  padding: 0.5rem 0.75rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  width: 100%;
+  transition: border-color 0.2s;
+}
+
+input:focus, select:focus, textarea:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59,130,246,0.2);
+}
+
+label {
+  font-weight: 500;
+  margin-bottom: 0.25rem;
+  display: block;
+}
+
+/* 购物车列表 */
+.cart-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding: 1rem 0;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.cart-item-info {
+  flex: 2;
+}
+
+.cart-item-actions {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.cart-item-actions input {
+  width: 70px;
+  text-align: center;
+}
+
+.cart-total {
+  text-align: right;
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 2px solid #e2e8f0;
+}
+
+/* 空状态提示 */
+.empty-state {
+  text-align: center;
+  padding: 3rem;
+  color: #6c757d;
+  font-size: 1.1rem;
+}
+
+/* 登录/注册卡片 */
+.auth-card {
+  max-width: 450px;
+  margin: 3rem auto;
+  background: white;
+  border-radius: 1rem;
+  padding: 2rem;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+}
+
+.auth-card h2 {
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.auth-card form > div {
+  margin-bottom: 1rem;
+}
+
+.auth-card button {
+  width: 100%;
+  margin-top: 0.5rem;
+}
+
+/* 管理员购物车卡片 */
+.admin-cart-card {
+  background: white;
+  border-radius: 0.75rem;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border-left: 4px solid #3b82f6;
+}
+
+/* 响应式 */
+@media (max-width: 768px) {
+  .container {
+    padding: 1rem;
+  }
+  nav {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.75rem;
+  }
+  nav .nav-links {
+    margin-left: 0;
+    justify-content: center;
+  }
+  .products-grid {
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  }
+  .search-area {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .search-area input {
+    max-width: none;
+  }
 }

@@ -17,7 +17,7 @@ function ProductSearch({ onSearch }) {
   };
 
   return (
-    <div style={{ marginBottom: '20px' }}>
+    <div className="search-area">
       <input
         type="text"
         placeholder="Search products..."

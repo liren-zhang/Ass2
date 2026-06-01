@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Link, Navigate } from 'react-router-dom';
 import { useAuth, AuthProvider } from './AuthContext';
+import { useNavigate } from 'react-router-dom'; 
 import Login from './Login';
 import Register from './Register';
 import Cart from './Cart';
@@ -62,11 +63,11 @@ function ProductList() {
       <ProductSearch onSearch={handleSearch} />
       <div style={{ display: 'flex', flexWrap: 'wrap', gap: '20px' }}>
         {filteredProducts.map((product) => (
-          <div key={product.id} style={{ border: '1px solid #ccc', padding: '10px', width: '200px' }}>
-            <h3>{product.name}</h3>
-            <p>${product.price}</p>
-            <p>{product.description}</p>
-            <button onClick={() => addToCart(product.id)}>Add to Cart</button>
+          <div key={product.id} className="product-card">
+          <h3>{product.name}</h3>
+          <p className="price">${product.price}</p>
+          <p>{product.description}</p>
+          <button onClick={() => addToCart(product.id)}>Add to Cart</button>
           </div>
         ))}
       </div>
@@ -77,23 +78,32 @@ function ProductList() {
 // 导航栏组件
 function Navbar() {
   const { user, logout } = useAuth();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout();
+    alert('You have been logged out.');
+    navigate('/');
+  };
 
   return (
-    <nav style={{ display: 'flex', gap: '15px', padding: '10px', background: '#f0f0f0' }}>
+    <nav>
       <Link to="/">Home</Link>
-      {user ? (
-        <>
-          <Link to="/cart">Cart</Link>
-          {user.is_admin && <Link to="/admin/carts">Admin Panel</Link>}
-          <span>Welcome, {user.username}</span>
-          <button onClick={logout}>Logout</button>
-        </>
-      ) : (
-        <>
-          <Link to="/login">Login</Link>
-          <Link to="/register">Register</Link>
-        </>
-      )}
+      {user && <span>Welcome, {user.username}</span>}
+      <div className="nav-links">
+        {user ? (
+          <>
+            <Link to="/cart">Cart</Link>
+            {user.is_admin && <Link to="/admin/carts">Admin Panel</Link>}
+            <button onClick={handleLogout}>Logout</button>
+          </>
+        ) : (
+          <>
+            <Link to="/login">Login</Link>
+            <Link to="/register">Register</Link>
+          </>
+        )}
+      </div>
     </nav>
   );
 }

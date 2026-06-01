@@ -21,6 +21,7 @@ from .permissions import IsAdminUser
 class ProductViewSet(viewsets.ModelViewSet):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
+    permission_classes = [AllowAny]   # 添加这一行，允许匿名访问
 
     @action(detail=False, methods=['get'], permission_classes=[AllowAny])
     def search(self, request):
